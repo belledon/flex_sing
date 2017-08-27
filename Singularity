@@ -1,5 +1,5 @@
 BootStrap: docker
-From: nvidia/cuda:8.0-cudnn6-devel
+From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
 
 %environment
     echo "Adding NVIDIA PATHs to /environment..."
@@ -33,6 +33,20 @@ From: nvidia/cuda:8.0-cudnn6-devel
                         vim \
                         wget \
                         libpng-dev \
+                        mesa-utils \
+                        freeglut3-dev \
+                        
+    echo "Manually installing glew packages"
+
+    cd /
+
+    wget http://mirrors.kernel.org/ubuntu/pool/main/g/glew/libglew1.10_1.10.0-3_amd64.deb
+    dpkg -i libglew1.10_1.10.0-3_amd64.deb
+    rm libglew1.10_1.10.0-3_amd64.deb
+
+    wget http://mirrors.kernel.org/ubuntu/pool/main/g/glew/libglew-dev_1.10.0-3_amd64.deb
+    dpkg -i libglew-dev_1.10.0-3_amd64.deb
+    rm libglew-dev_1.10.0-3_amd64.deb
 
 
     apt-get clean
@@ -108,6 +122,5 @@ From: nvidia/cuda:8.0-cudnn6-devel
     
 
 %test
-    # Ensure that Chainer can be imported
     echo $LD_LIBRARY_PATH
-    
+    nvidia-smi    
