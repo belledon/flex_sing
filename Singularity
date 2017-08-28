@@ -2,13 +2,13 @@ BootStrap: docker
 From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
 
 %environment
-    echo "Adding NVIDIA PATHs to /environment..."
+    echo "Adding NVIDIA PATHs to environment..."
     export LC_ALL=C
     export NV_DRIVER_PATH=/usr/local/NVIDIA-Linux-x86_64
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$NV_DRIVER_PATH
+    export LD_LIBRARY_PATH=$NV_DRIVER_PATH:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
     export PATH=$PATH:$NV_DRIVER_PATH
     export CUDA_PATH=/usr/local/cuda-8.0
-    export LD_LIBRARY_PATH=export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
     export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 
 
@@ -32,10 +32,11 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
                         g++ \
                         vim \
                         wget \
+                        gdb \
                         libpng-dev \
-                        mesa-utils \
                         freeglut3-dev \
-                        
+                        # mesa-utils \
+
     echo "Manually installing glew packages"
 
     cd /
@@ -119,7 +120,12 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
 
     mkdir /om || echo "/om exists"
     mkdir /cm || echo "/cm exists"  
-    
+
+    echo "Updating library paths"
+    cd /etc/ld.so.conf.d
+    echo "/usr/local/NVIDIA-Linux-x86_64" | cat > nvidia-driver.conf
+    cd /
+    ldconfig
 
 %test
     echo $LD_LIBRARY_PATH
