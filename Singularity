@@ -56,7 +56,7 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
     # wget http://us.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run
     # echo "Installing Driver (Needed for nccl)"
 
-    NV_DRIVER_VERSION=375.20      # <---- EDIT: CHANGE THIS FOR YOUR SYSTEM
+    NV_DRIVER_VERSION=375.66      # <---- EDIT: CHANGE THIS FOR YOUR SYSTEM
     NV_DRIVER_PATH=/usr/local/NVIDIA-Linux-x86_64
 
     if [ -d "$NV_DRIVER_PATH"]; then
@@ -80,7 +80,7 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
 
         echo "Creating NVIDIA links"
         for n in *.$NV_DRIVER_VERSION; do
-            ln -v -s $n ${n%.375.20}   # <---- EDIT: CHANGE THIS IF DRIVER VERSION
+            ln -v -s $n ${n%.375.66}   # <---- EDIT: CHANGE THIS IF DRIVER VERSION
         done
         ln -v -s libnvidia-ml.so.$NV_DRIVER_VERSION libnvidia-ml.so.1
         ln -v -s libcuda.so.$NV_DRIVER_VERSION libcuda.so.1
@@ -90,6 +90,7 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
     
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$NV_DRIVER_PATH
     export PATH=$PATH:$NV_DRIVER_PATH
+    
     
 
     if [ -d "/yaml-cpp"]; then
@@ -106,15 +107,19 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
         make install
         make clean
     fi
+    
+        
+    # Removing this untill debugging is complete
 
-    apt-get install -y --no-install-recommends python3-dev
-    apt-get install -y --no-install-recommends python3-pip
 
-    python3 -m pip install --upgrade pip
-    python3 -m pip install -U setuptools
-    python3 -m pip install h5py
-    python3 -m pip install transforms3d
-    python3 -m pip install Pillow
+    # apt-get install -y --no-install-recommends python3-dev
+    # apt-get install -y --no-install-recommends python3-pip
+
+    # python3 -m pip install --upgrade pip
+    # python3 -m pip install -U setuptools
+    # python3 -m pip install h5py
+    # python3 -m pip install transforms3d
+    # python3 -m pip install Pillow
    
     
 
