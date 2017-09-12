@@ -7,7 +7,7 @@ From: nvidia/cuda:8.0-cudnn7-devel-ubuntu16.04
     export NV_DRIVER_PATH=/usr/local/NVIDIA-Linux-x86_64
     export LD_LIBRARY_PATH=$NV_DRIVER_PATH:$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64
     export PATH=$PATH:$NV_DRIVER_PATH
-    export CUDA_PATH=/usr/local/cuda-8.0
+    export CUDA_PATH=/usr/local/cuda
     export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:$LD_LIBRARY_PATH
     export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
 
